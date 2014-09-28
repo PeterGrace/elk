@@ -43,7 +43,9 @@ ADD docker/supervisor-logstash.conf /etc/supervisor/conf.d/logstash.conf
 ADD docker/input-supervisor.conf /etc/logstash/conf.d/input-supervisor.conf
 ADD docker/input-syslog.conf /etc/logstash/conf.d/input-syslog.conf
 ADD docker/output-elastic.conf /etc/logstash/conf.d/output-elastic.conf
+ADD docker/filter-haproxy.conf /etc/logstash/conf.d/filter-haproxy.conf
 ADD docker/start-logstash.sh /opt/logstash/
+ADD docker/patterns/ /etc/logstash/patterns
 
 #kibana
 ADD docker/supervisor-httpd.conf /etc/supervisor/conf.d/httpd.conf
