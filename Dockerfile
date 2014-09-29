@@ -29,6 +29,7 @@ ADD docker/serf-start.sh /opt/sei-bin/
 ADD docker/serf-join.sh /opt/sei-bin/
 
 
+VOLUME ["/var/lib/elasticsearch/"]
 #Elasticsearch
 ADD https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.3.2.deb /opt/downloads/
 ADD docker/supervisor-elasticsearch.conf /etc/supervisor/conf.d/elasticsearch.conf
