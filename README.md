@@ -5,7 +5,11 @@ This is a Docker image which contains ElasticSearch, Logstash and a Kibana web i
 
 Usage
 =====
-docker run -d -p 80:80/tcp -p 9200:9200/tcp  -p 514:514/udp petergrace/elk
+docker run -d *-e "SSH_KEY=$(cat ~/.ssh/id_dsa.pub)" -v /path/to/elasticsearch/dir:/var/lib/elasticsearch* -p 80:80/tcp -p 9200:9200/tcp -p 514:514/udp petergrace/elk
+
+-e and -v are optional:
+ -e allows you to populate your ssh public key into the container so you can ssh into said container (as root)
+ -v allows you to store your elasticsearch data in a persistent location should you wish to do so.
 
 What does this do? 
 ==================
@@ -22,7 +26,9 @@ The docker container is set to UTC time.  If you send log entries in a different
 
 I would love it if you would add grok filter X!
 ===============================================
-If you submit a pull request with configs for extra grok filters, so long as it works I will happily merge them.
+Currently, I have two filters setup.  One watches syslog for haproxy rules (since I utilize haproxy in my environment and it was a low-hanging fruit to test) and the other is ssh authentication failures (since as I was writing the container I noticed someone trying to brute-force my VPS's).  Both of these filters utilize geoip to track locations of IP addresses which have accessed them.  If you wind up using either of these filters, Kibana can produce a map view of where ip addresses originate.  Add a "bettermap" panel and key it agains geoip.location.
+
+If you submit a pull request with configs for extra grok filters, so long as it works I will happily merge them.  Add requisite patterns in docker/patterns/ and put a filter-* file in docker/ to utilize said pattern.
 
 Security Note!
 ===============
