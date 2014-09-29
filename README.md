@@ -15,6 +15,11 @@ A core part of Logstash is being ignored in this image: grok filters.  One of th
 
 NOTE: This really shouldn't use this as a production ELK server!  This is just to get your foot in the door and provide a technology demo to someone who's interested in seeing what the technology looks like!
 
+Help!  I'm not getting log entries in kibana!
+=============================================
+The docker container is set to UTC time.  If you send log entries in a different timezone, they will be recorded with that time.
+
+
 I would love it if you would add grok filter X!
 ===============================================
 If you submit a pull request with configs for extra grok filters, so long as it works I will happily merge them.
