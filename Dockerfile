@@ -40,6 +40,8 @@ ADD https://download.elasticsearch.org/logstash/logstash/packages/debian/logstas
 RUN /usr/bin/dpkg -i /opt/downloads/elasticsearch-1.3.2.deb /opt/downloads/logstash_1.4.2-1-2c0f5a1_all.deb
 
 #Put logstash files in proper places
+ADD http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz /etc/logstash/
+RUN /bin/gzip -d /etc/logstash/GeoLiteCity.dat
 ADD docker/supervisor-logstash.conf /etc/supervisor/conf.d/logstash.conf
 ADD docker/input-supervisor.conf /etc/logstash/conf.d/input-supervisor.conf
 ADD docker/input-syslog.conf /etc/logstash/conf.d/input-syslog.conf
