@@ -5,10 +5,9 @@ This is a Docker image which contains ElasticSearch, Logstash and a Kibana web i
 
 Usage
 =====
-docker run -d *-e "SSH_KEY=$(cat ~/.ssh/id_dsa.pub)" -v /path/to/elasticsearch/dir:/var/lib/elasticsearch* -p 80:80/tcp -p 9200:9200/tcp -p 514:514/udp petergrace/elk
+docker run -d *-v /path/to/elasticsearch/dir:/var/lib/elasticsearch* -p 80:80/tcp -p 9200:9200/tcp -p 514:514/udp petergrace/elk
 
--e and -v are optional:
- -e allows you to populate your ssh public key into the container so you can ssh into said container (as root)
+-the -v argument is optional:
  -v allows you to store your elasticsearch data in a persistent location should you wish to do so.
 
 What does this do? 

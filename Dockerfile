@@ -5,19 +5,9 @@ RUN apt-get -y install software-properties-common
 RUN /usr/bin/add-apt-repository ppa:webupd8team/java
 RUN apt-get update
 RUN /bin/echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
-RUN apt-get install -y supervisor openssh-server unzip git oracle-java7-installer oracle-java7-set-default apache2
+RUN apt-get install -y supervisor unzip git oracle-java7-installer oracle-java7-set-default apache2
 RUN apt-get -y upgrade
 ADD docker/supervisor-system.conf /etc/supervisor/conf.d/system.conf
-
-#SSH
-ADD docker/supervisor-sshd.conf /etc/supervisor/conf.d/sshd.conf
-RUN mkdir -p /root/.ssh
-RUN chmod 0600 /root/.ssh
-RUN sed -ri 's/UsePAM yes/#UsePAM yes/g; s/#UsePAM no/UsePAM no/g;' /etc/ssh/sshd_config
-RUN mkdir -p /var/run/sshd
-RUN chown 0:0 /var/run/sshd
-RUN chmod 0744 /var/run/sshd
-ADD docker/create_ssh_key.sh /opt/sei-bin/
 
 #Serf
 ADD docker/supervisor-serf.conf /etc/supervisor/conf.d/serf.conf
