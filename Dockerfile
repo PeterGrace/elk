@@ -21,13 +21,13 @@ ADD docker/serf-join.sh /opt/sei-bin/
 
 VOLUME ["/var/lib/elasticsearch/"]
 #Elasticsearch
-ADD https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.3.2.deb /opt/downloads/
+ADD https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.2.deb /opt/downloads/
 ADD docker/supervisor-elasticsearch.conf /etc/supervisor/conf.d/elasticsearch.conf
 
 #logstash
-ADD https://download.elasticsearch.org/logstash/logstash/packages/debian/logstash_1.4.2-1-2c0f5a1_all.deb /opt/downloads/
+ADD https://download.elastic.co/logstash/logstash/packages/debian/logstash_1.5.4-1_all.deb /opt/downloads/
 #install both debs and resolve dependencies
-RUN /usr/bin/dpkg -i /opt/downloads/elasticsearch-1.3.2.deb /opt/downloads/logstash_1.4.2-1-2c0f5a1_all.deb
+RUN /usr/bin/dpkg -i /opt/downloads/*.deb
 
 #Put logstash files in proper places
 ADD http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz /etc/logstash/
@@ -48,12 +48,12 @@ ADD docker/kibana-vhost.conf /etc/apache2/sites-available/0-kibana.conf
 RUN /usr/sbin/a2ensite 0-kibana
 RUN /usr/sbin/groupadd kibana
 RUN /usr/sbin/useradd -d /home/kibana -g kibana -G www-data -m -s /usr/sbin/nologin kibana
-ADD https://download.elasticsearch.org/kibana/kibana/kibana-3.1.0.tar.gz /opt/downloads/
+ADD https://download.elasticsearch.org/kibana/kibana/kibana-3.1.2.tar.gz /opt/downloads/
 RUN mkdir /home/kibana/html
 WORKDIR /home/kibana/html
-RUN /bin/tar xzvf /opt/downloads/kibana-3.1.0.tar.gz
-RUN mv /home/kibana/html/kibana-3.1.0/* /home/kibana/html
-RUN rmdir /home/kibana/html/kibana-3.1.0
+RUN /bin/tar xzvf /opt/downloads/kibana-3.1.2.tar.gz
+RUN mv /home/kibana/html/kibana-3.1.2/* /home/kibana/html
+RUN rmdir /home/kibana/html/kibana-3.1.2
 RUN chown -R kibana:www-data /home/kibana/html
 
 #Fix perms on /var/log/supervisor so logstash can read/write to dir
